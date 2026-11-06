@@ -8,7 +8,13 @@
     "**/Thumbs.db": true,
     "[!s]*/**": true,
     "s[!r]*/**": true,
-    "sr[!c]*/**": true
+    "sr[!c]*/**": true,
+    "src/[!s]*/**": true,
+    "src/s[!h]*/**": true,
+    "src/sh[!a]*/**": true,
+    "src/sha[!r]*/**": true,
+    "src/shar[!e]*/**": true,
+    "src/share[!d]*/**": true
   },
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",

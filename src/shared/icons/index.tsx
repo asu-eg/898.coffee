@@ -1,11 +1,12 @@
 import { PATHS, FLIP_IN_RTL, type IconName } from "./data";
 
-interface IconProps {
+export interface IconProps {
+  name: IconName;
   size?: number;
   className?: string;
 }
 
-function Icon({ name, size = 24, className }: IconProps & { name: IconName }) {
+export function Icon({ name, size = 24, className }: IconProps) {
   const flip = FLIP_IN_RTL.has(name) ? "rtl:-scale-x-100" : "";
   const classes = [flip, className].filter(Boolean).join(" ");
 
@@ -26,11 +27,3 @@ function Icon({ name, size = 24, className }: IconProps & { name: IconName }) {
     </svg>
   );
 }
-
-export const Icons = {
-  Arrow: (p: IconProps) => <Icon name="arrow" {...p} />,
-  Cup: (p: IconProps) => <Icon name="cup" {...p} />,
-  Star: (p: IconProps) => <Icon name="star" {...p} />,
-  Instagram: (p: IconProps) => <Icon name="instagram" {...p} />,
-  Pin: (p: IconProps) => <Icon name="pin" {...p} />,
-} as const;
