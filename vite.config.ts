@@ -16,7 +16,7 @@ const proxy = {
 export default defineConfig({
   plugins: [
     react(),
-    babel({ presets: [reactCompilerPreset()] }), 
+    babel({ presets: [reactCompilerPreset()] }),
     tailwindcss(),
     oxlintPlugin(),
   ],
