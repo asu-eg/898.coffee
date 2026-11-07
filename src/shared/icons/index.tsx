@@ -1,6 +1,6 @@
 import { PATHS, FLIP_IN_RTL, type IconName } from "./data";
 
-export interface IconProps {
+interface IconProps {
   name: IconName;
   size?: number;
   className?: string;

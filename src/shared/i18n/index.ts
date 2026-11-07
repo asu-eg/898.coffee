@@ -1,5 +1,6 @@
 import { useSyncExternalStore } from "react";
-import { engine, type Locale, type Localized } from "./engine";
+import { engine } from "./engine";
+import type { Locale, Localized } from "./data";
 
 export type { Locale, Localized };
 

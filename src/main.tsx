@@ -1,4 +1,3 @@
-import "@fontsource-variable/montserrat";
 import "@fontsource-variable/cairo";
 import "./index.css";
 import { StrictMode } from "react";

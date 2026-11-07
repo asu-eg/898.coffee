@@ -1,7 +1,4 @@
-export type Locale = "en" | "ar";
-export type Localized<T> = Record<Locale, T>;
-
-const STORAGE_KEY = "PrefLang:locale";
+import { type Locale, STORAGE_KEY } from "./data";
 
 let current: Locale = "en";
 const listeners = new Set<() => void>();
@@ -44,7 +41,7 @@ export const engine = {
     } catch {
       current = "en";
     }
-    
+
     applyToDOM(current);
   },
 };
