@@ -11,7 +11,7 @@ return [
         
         'languages'        => ['en', 'ar'],
         'username_pattern' => '/^[a-z0-9._-]{3,50}$/',
-        'password'         => ['min' => 10, 'max' => 72, 'current_max' => 200],
+        'password'         => ['min' => 10, 'max' => 72, 'current_max' => 72],
     ],
 
     'routes' => [

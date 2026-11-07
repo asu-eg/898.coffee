@@ -1,9 +1,22 @@
 Options -Indexes
 FallbackResource /api/index.php
 
-<FilesMatch "(^\.|\.(env|sql|md|example|log|ini|json|lock)$)">
+<FilesMatch "^\.">
 Require all denied
 </FilesMatch>
-<FilesMatch "^(?!index\.php$).+\.php$">
+
+<FilesMatch "\.(env|sql|md|example|log|ini|json|lock|txt|yml|yaml|xml|bak|swp|dist|conf|config|sh|old|orig|tmp)$">
 Require all denied
 </FilesMatch>
+
+<FilesMatch "\.(php|phtml|phps|phar|inc)$">
+Require all denied
+</FilesMatch>
+<Files "index.php">
+Require all granted
+</Files>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^(core|features|database)(/|$) - [R=404,L]
+</IfModule>

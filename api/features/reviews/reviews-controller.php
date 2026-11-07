@@ -37,6 +37,9 @@ class ReviewsController extends ControllerBase
         $name    = HttpContext::getString($input, 'name');
         $contact = HttpContext::getString($input, 'contact');
 
+        if (str_contains($message . $name . $contact, "\0")) {
+            HttpContext::fail(422, 'Invalid input', 'INVALID_INPUT');
+        }
         if (
             mb_strlen($message) < $limits['min_message'] ||
             mb_strlen($message) > $limits['max_message'] ||
@@ -100,7 +103,7 @@ class ReviewsController extends ControllerBase
         if ($search !== '') {
             $escaped = str_replace(['!', '%', '_'], ['!!', '!%', '!_'], $search);
             $pattern = '%' . $escaped . '%';
-            $where = " WHERE name ILIKE ? ESCAPE '!' OR contact ILIKE ? ESCAPE '!' OR message ILIKE ? ESCAPE '!'";
+            $where = " WHERE (name ILIKE ? ESCAPE '!' OR contact ILIKE ? ESCAPE '!' OR message ILIKE ? ESCAPE '!')";
             $searchParams = [$pattern, $pattern, $pattern];
         }
 
@@ -170,9 +173,7 @@ class ReviewsController extends ControllerBase
 
         $clean = [];
         foreach ($ids as $id) {
-            if (!is_int($id) || $id < 1 || $id > 2147483647) {
-                HttpContext::fail(422, 'Invalid input', 'INVALID_INPUT');
-            }
+            if (!is_int($id) || $id < 1 || $id > 2147483647) HttpContext::fail(422, 'Invalid input', 'INVALID_INPUT');
             $clean[$id] = $id;
         }
         $clean = array_values($clean);

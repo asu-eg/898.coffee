@@ -1,6 +1,7 @@
 <?php
 if (php_sapi_name() !== 'cli') {
-    die("Error: This script can only be run from the command line.\n");
+    http_response_code(404);
+    exit;
 }
 
 define('API_ENTRY', true);
@@ -8,7 +9,7 @@ define('API_ENTRY', true);
 require __DIR__ . '/../core/autoloader.php';
 Autoloader::register(dirname(__DIR__));
 
-Env::load(dirname(__DIR__, 2) . '/.env');
+Env::load(dirname(__DIR__) . '/.env');
 $config = require __DIR__ . '/../appsettings.php';
 
 echo "Connecting to Neon DB...\n";

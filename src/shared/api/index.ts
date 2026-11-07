@@ -10,14 +10,16 @@ async function parseErrorResponse(
 
   try {
     const errorData: ApiErrorResponse = await response.json();
-    if (errorData.error) {
-      code = errorData.error.code || code;
-      message = errorData.error.message || message;
-    }
+    code = errorData.code || code;
+    message = errorData.error || message;
   } catch {
+    void 0;
+  }
+
+  if (code === "UNKNOWN_ERROR") {
     if (response.status === 429) code = "RATE_LIMITED";
-    if (response.status === 422) code = "INVALID_INPUT";
-    if (response.status >= 500) code = "INTERNAL_ERROR";
+    else if (response.status === 422) code = "INVALID_INPUT";
+    else if (response.status >= 500) code = "INTERNAL_ERROR";
   }
 
   return { code, message };

@@ -9,9 +9,9 @@ interface ChoiceCardProps {
 }
 
 const styles = {
-  card: "group flex w-full items-center gap-4 rounded-lg border border-white/50 bg-white/80 px-4 py-4 text-start backdrop-blur-sm outline-none transition-all duration-interactive ease-smooth data-focus-visible:ring-2 data-focus-visible:ring-brand data-hovered:bg-white data-hovered:border-brand/30 data-pressed:scale-[0.98] motion-reduce:transition-none",
+  card: "group flex min-h-16 w-full items-center gap-4 rounded-lg border border-white/50 bg-white/80 px-4 py-3 text-start outline-none transition-all duration-interactive ease-smooth data-focus-visible:ring-2 data-focus-visible:ring-brand data-hovered:bg-white data-hovered:border-brand/30 data-pressed:scale-[0.98] motion-reduce:transition-none",
   bubble:
-    "flex size-12 shrink-0 items-center justify-center rounded-full bg-arctic/60 text-brand transition-colors duration-interactive ease-smooth group-data-hovered:bg-arctic motion-reduce:transition-none",
+    "flex size-11 shrink-0 items-center justify-center rounded-full bg-arctic/60 text-brand transition-colors duration-interactive ease-smooth group-data-hovered:bg-arctic motion-reduce:transition-none",
   icon: "size-6",
   text: "min-w-0 flex-1",
   title:

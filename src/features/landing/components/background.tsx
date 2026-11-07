@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useId } from "react";
 
 const styles = {
   colors: {
@@ -6,7 +6,7 @@ const styles = {
     brand: "var(--color-brand)",
     sand: "var(--color-sand)",
     arctic: "var(--color-arctic)",
-    highlight: "#fff",
+    highlight: "var(--color-cream)",
   },
 
   opacity: {
@@ -23,7 +23,6 @@ const styles = {
   },
 
   pattern: {
-    id: "landing-pattern",
     cell: 90,
     columns: 3,
     offsetX: -30,
@@ -146,6 +145,8 @@ const VEIL = [
 ].join(", ");
 
 export function Background() {
+  const patternId = useId();
+
   return (
     <div
       aria-hidden="true"
@@ -159,7 +160,7 @@ export function Background() {
         <svg className={styles.classes.layer}>
           <defs>
             <pattern
-              id={p.id}
+              id={patternId}
               width={p.cell * p.columns}
               height={p.cell * ROWS}
               patternUnits="userSpaceOnUse"
@@ -176,7 +177,7 @@ export function Background() {
               ))}
             </pattern>
           </defs>
-          <rect width="100%" height="100%" fill={`url(#${p.id})`} />
+          <rect width="100%" height="100%" fill={`url(#${patternId})`} />
         </svg>
         <div
           className={styles.classes.layer}

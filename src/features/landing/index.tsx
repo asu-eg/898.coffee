@@ -27,7 +27,7 @@ export function LandingPage() {
   const otherLocale = locale === "en" ? "ar" : "en";
 
   return (
-    <div className={styles.page}>
+    <main className={styles.page}>
       <Background />
 
       <div className={styles.container}>
@@ -35,6 +35,7 @@ export function LandingPage() {
           <LanguageToggle
             label={s.languageName}
             ariaLabel={s.switchToLanguage}
+            lang={otherLocale}
             onPress={() => setLocale(otherLocale)}
           />
         </div>
@@ -46,7 +47,7 @@ export function LandingPage() {
           taglineEmphasis={s.taglineEmphasis}
         />
 
-        <nav aria-label={site.brandName} className={styles.nav}>
+        <nav aria-label={s.mainNav} className={styles.nav}>
           <div className={styles.group}>
             <ActionCard
               to={ROUTES.menu}
@@ -92,6 +93,6 @@ export function LandingPage() {
           copyright={`© ${YEAR} ${site.brandName}`}
         />
       </div>
-    </div>
+    </main>
   );
 }

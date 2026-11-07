@@ -36,6 +36,11 @@ class HttpContext {
     }
 
     public static function getString(array $input, string $key): string {
-        return is_string($input[$key] ?? null) ? trim($input[$key]) : '';
+        $raw = $input[$key] ?? null;
+        if (!is_string($raw)) return '';
+        if (str_contains($raw, "\0")) {
+            self::fail(422, 'Invalid input', 'INVALID_INPUT');
+        }
+        return trim($raw);
     }
 }

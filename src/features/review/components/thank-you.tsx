@@ -11,7 +11,7 @@ const styles = {
   wrapper:
     "flex flex-col items-center gap-4 py-8 text-center animate-reveal-in",
   bubble:
-    "flex size-16 items-center justify-center rounded-full bg-success text-white shadow-sm",
+    "flex size-16 items-center justify-center rounded-full bg-success text-white",
   icon: "size-8",
   message: "text-heading font-bold text-navy text-balance mt-2",
   button:

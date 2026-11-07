@@ -78,8 +78,7 @@ class LoginController extends ControllerBase
      */
     public function logout(): void
     {
-        Guard::csrfGuard();
-        Guard::start($this->config);
+        Guard::requireAdmin($this->config);
         Guard::destroy();
         HttpContext::json(['ok' => true]);
     }

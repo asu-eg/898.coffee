@@ -20,7 +20,7 @@ public static function register(string $root): void {
             $class = str_replace('-', '', ucwords($name, '-'));
 
             if (isset(self::$map[$class])) {
-                error_log("Autoloader: class '$class' defined in both '"
+                throw new RuntimeException("Autoloader: class '$class' defined in both '"
                     . self::$map[$class] . "' and '" . $file->getPathname() . "'");
             }
 

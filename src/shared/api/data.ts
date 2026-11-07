@@ -2,11 +2,7 @@ export class ApiError extends Error {
   status: number;
   code: string;
 
-  constructor(
-    status: number,
-    code: string,
-    message: string
-  ) {
+  constructor(status: number, code: string, message: string) {
     super(message);
     this.name = "ApiError";
     this.status = status;
@@ -15,10 +11,9 @@ export class ApiError extends Error {
 }
 
 export interface ApiErrorResponse {
-  error?: {
-    code?: string;
-    message?: string;
-  };
+  ok?: false;
+  error?: string;
+  code?: string;
 }
 
 export const API_CONFIG = {

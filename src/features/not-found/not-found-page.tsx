@@ -1,6 +1,6 @@
 import { useStrings } from "@/shared/i18n";
 import { Link, ROUTES } from "@/shared/router";
-import { Background } from "@/features/landing/components/background";
+import { Background } from "./components/background";
 import logo from "@/assets/mark.svg";
 import { strings } from "./strings";
 

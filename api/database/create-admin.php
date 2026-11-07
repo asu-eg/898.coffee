@@ -1,6 +1,7 @@
 <?php
 if (php_sapi_name() !== 'cli') {
-    die("Error: This script can only be run from the command line.\n");
+    http_response_code(404);
+    exit;
 }
 
 define('API_ENTRY', true);
@@ -23,7 +24,7 @@ if (!preg_match($authCfg['username_pattern'], $username)) {
 }
 
 echo "Enter password for '$username': ";
-$password = trim(fgets(STDIN));
+$password = rtrim(fgets(STDIN), "\r\n");
 
 if (strlen($password) < $authCfg['password']['min']) {
     die("Error: Password must be at least {$authCfg['password']['min']} characters.\n");

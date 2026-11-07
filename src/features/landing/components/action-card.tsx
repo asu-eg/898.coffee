@@ -68,23 +68,19 @@ export function ActionCard(props: ActionCardProps) {
     </>
   );
 
-  return (
-    <div>
-      {"to" in props ? (
-        <Link href={props.to} className={`${styles.card} ${look.card}`}>
-          {content}
-        </Link>
-      ) : (
-        <a
-          href={props.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={`${styles.card} ${look.card}`}
-        >
-          {content}
-          <span className={styles.srOnly}>{props.newTabLabel}</span>
-        </a>
-      )}
-    </div>
+  return "to" in props ? (
+    <Link href={props.to} className={`${styles.card} ${look.card}`}>
+      {content}
+    </Link>
+  ) : (
+    <a
+      href={props.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`${styles.card} ${look.card}`}
+    >
+      {content}
+      <span className={styles.srOnly}>{props.newTabLabel}</span>
+    </a>
   );
 }

@@ -2,6 +2,7 @@ import type { Localized } from "@/shared/i18n";
 
 const en = {
   sheetTitle: "How was it?",
+  sheetDescription: "Submit your review or share feedback.",
   googleTitle: "Loved it!",
   googleHint: "Share your experience",
   noteTitle: "I have a suggestion",
@@ -25,6 +26,7 @@ const en = {
 
 const ar: typeof en = {
   sheetTitle: "كيف كانت تجربتك؟",
+  sheetDescription: "أرسل تقييمك أو شارك ملاحظاتك.",
   googleTitle: "كل شيء كان رائعاً!",
   googleHint: "شارك تجربتك",
   noteTitle: "لدي بعض الملاحظات",

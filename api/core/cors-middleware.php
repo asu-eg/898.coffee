@@ -18,6 +18,10 @@ class CorsMiddleware {
 
         $allowed = $config['cors']['origins'];
         if (!in_array($origin, $allowed, true)) {
+            if (Env::get('CORS_ALLOW_ANY') === '1') {
+                if ($method === 'OPTIONS') { http_response_code(204); exit; }
+                return;
+            }
             HttpContext::fail(403, 'Origin not allowed');
         }
 
@@ -32,12 +36,17 @@ class CorsMiddleware {
             exit;
         }
     }
-
     private static function isSameOrigin(string $origin): bool {
-        $host = parse_url($origin, PHP_URL_HOST);
-        $port = parse_url($origin, PHP_URL_PORT);
-        if (!$host) return false;
-        $originHost = $port ? "$host:$port" : $host;
-        return strcasecmp($originHost, $_SERVER['HTTP_HOST'] ?? '') === 0;
+        $parts = parse_url($origin);
+        if (!isset($parts['scheme'], $parts['host'])) return false;
+
+        $scheme = (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off') ? 'https' : 'http';
+        if (Env::get('TRUST_PROXY') === '1') {
+            $proto = strtolower($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '');
+            if ($proto === 'https' || $proto === 'http') $scheme = $proto;
+        }
+
+        $expected = $scheme . '://' . ($_SERVER['HTTP_HOST'] ?? '');
+        return strcasecmp($origin, $expected) === 0;
     }
 }
