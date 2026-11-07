@@ -1,0 +1,33 @@
+import { Button } from "react-aria-components";
+import { Icon } from "@/shared/icons";
+
+interface ThankYouProps {
+  message: string;
+  closeLabel: string;
+  onClose: () => void;
+}
+
+const styles = {
+  wrapper:
+    "flex flex-col items-center gap-4 py-8 text-center animate-reveal-in",
+  bubble:
+    "flex size-16 items-center justify-center rounded-full bg-success text-white shadow-sm",
+  icon: "size-8",
+  message: "text-heading font-bold text-navy text-balance mt-2",
+  button:
+    "text-small mt-4 min-h-12 w-full rounded-full bg-brand px-8 font-bold text-white outline-none transition-all data-focus-visible:ring-2 data-focus-visible:ring-brand data-focus-visible:ring-offset-2 data-hovered:bg-brand/90 data-pressed:scale-[0.98]",
+};
+
+export function ThankYou({ message, closeLabel, onClose }: ThankYouProps) {
+  return (
+    <div className={styles.wrapper}>
+      <span className={styles.bubble}>
+        <Icon name="check" className={styles.icon} />
+      </span>
+      <p className={styles.message}>{message}</p>
+      <Button onPress={onClose} className={styles.button}>
+        {closeLabel}
+      </Button>
+    </div>
+  );
+}
