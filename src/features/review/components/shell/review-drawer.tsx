@@ -12,10 +12,9 @@ interface ReviewDrawerProps {
 }
 
 const styles = {
-  overlay:
-    "fixed inset-0 z-50 bg-scrim data-[state=open]:!animate-scrim-in data-[state=closed]:!animate-scrim-out",
+  overlay: "fixed inset-0 z-50 bg-scrim",
   content:
-    "fixed inset-x-0 bottom-0 z-50 mx-auto mt-24 flex max-h-[min(92dvh,48rem)] w-full max-w-md flex-col rounded-t-[32px] border border-sand/50 bg-cream text-charcoal shadow-sheet outline-none data-[state=open]:!animate-slide-up data-[state=closed]:!animate-slide-down",
+    "fixed inset-x-0 bottom-0 z-50 mx-auto mt-24 flex max-h-[min(92dvh,48rem)] w-full max-w-md flex-col rounded-t-[32px] border border-sand/50 bg-cream text-charcoal shadow-sheet outline-none",
   handleWrapper: "mx-auto mt-4 h-1.5 w-12 shrink-0 rounded-full bg-brand/20",
   scrollArea:
     "flex-1 overflow-y-auto px-6 pt-6 pb-[calc(max(1.25rem,env(safe-area-inset-bottom)))]",
@@ -35,16 +34,13 @@ export function ReviewDrawer({
   children,
 }: ReviewDrawerProps) {
   return (
-    <Drawer.Root open={isOpen} onOpenChange={(open) => !open && onClose()}>
+    <Drawer.Root
+      open={isOpen}
+      onOpenChange={(open) => !open && onClose()}
+    >
       <Drawer.Portal>
-        <Drawer.Overlay
-          data-vaul-animate="true"
-          className={styles.overlay}
-        />
-        <Drawer.Content
-          data-vaul-animate="true"
-          className={styles.content}
-        >
+        <Drawer.Overlay className={styles.overlay} />
+        <Drawer.Content className={styles.content}>
           <div className={styles.handleWrapper} />
           <div className={styles.scrollArea}>
             <div className={styles.header}>

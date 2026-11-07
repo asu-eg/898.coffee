@@ -164,13 +164,15 @@ class ReviewsController extends ControllerBase
         $cfg = $this->config['features']['reviews'];
         $ids = HttpContext::readBody()['ids'] ?? null;
 
-        if (!is_array($ids) || $ids === [] || count($ids) > $cfg['admin']['max_delete_batch']) {
+        if (!is_array($ids) || !array_is_list($ids) || $ids === [] || count($ids) > $cfg['admin']['max_delete_batch']) {
             HttpContext::fail(422, 'Invalid input', 'INVALID_INPUT');
         }
 
         $clean = [];
         foreach ($ids as $id) {
-            if (!is_int($id) || $id < 1) HttpContext::fail(422, 'Invalid input', 'INVALID_INPUT');
+            if (!is_int($id) || $id < 1 || $id > 2147483647) {
+                HttpContext::fail(422, 'Invalid input', 'INVALID_INPUT');
+            }
             $clean[$id] = $id;
         }
         $clean = array_values($clean);

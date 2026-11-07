@@ -1,15 +1,24 @@
 import { useLayoutEffect, useState } from "react";
+import { Button, Form } from "react-aria-components";
 import { ApiError, postJson } from "@/shared/api/";
 import { useStrings } from "@/shared/i18n";
 import { useLocation, ROUTES } from "@/shared/router";
 import { ChoiceCard } from "./components/choice-card";
-import { ReviewForm, type ReviewFormValues } from "./components/review-form";
-import { ReviewDrawer } from "./components/review-drawer";
+import { ReviewMessageField } from "./components/fields/review-message-field";
+import { ReviewTextField } from "./components/fields/review-text-field";
+import { ReviewDrawer } from "./components/shell/review-drawer";
 import { ThankYou } from "./components/thank-you";
 import { GOOGLE_REVIEW_URL, LIMITS, REVIEW_API } from "./config";
 import { strings } from "./strings";
 
 type Step = "choose" | "note" | "sent";
+
+type ReviewFormValues = {
+  message: string;
+  name: string;
+  contact: string;
+  website: string;
+};
 
 const EMPTY_FORM: ReviewFormValues = {
   message: "",
@@ -19,8 +28,13 @@ const EMPTY_FORM: ReviewFormValues = {
 };
 
 const styles = {
-  choices:
-    "flex flex-col gap-3 pb-4 animate-reveal-in",
+  choices: "flex flex-col gap-3 pb-4 animate-reveal-in",
+  form: "flex flex-col gap-5 pb-2 animate-reveal-in",
+  formError:
+    "text-small rounded-xl border border-error/30 bg-error/10 px-4 py-3 font-bold text-error",
+  submit:
+    "text-small mt-2 min-h-12 rounded-full bg-brand px-6 text-center font-bold text-white outline-none transition-all data-focus-visible:ring-2 data-focus-visible:ring-brand data-focus-visible:ring-offset-2 data-hovered:bg-brand/90 data-pressed:scale-[0.98] data-disabled:opacity-50",
+  honeypot: "sr-only",
 };
 
 export function ReviewPage() {
@@ -39,13 +53,17 @@ export function ReviewPage() {
 
   useLayoutEffect(() => {
     if (!isOpen) return;
-    setTimeout(() => {
-      setStep("choose");
-      setForm(EMPTY_FORM);
-      setSending(false);
-      setError(null);
-    }, 0);
+
+    setStep("choose");
+    setForm(EMPTY_FORM);
+    setSending(false);
+    setError(null);
   }, [isOpen]);
+
+  function updateField(field: keyof ReviewFormValues, value: string) {
+    setForm((current) => ({ ...current, [field]: value }));
+    if (error) setError(null);
+  }
 
   function openGoogleReview() {
     window.open(GOOGLE_REVIEW_URL, "_blank", "noopener,noreferrer");
@@ -69,6 +87,7 @@ export function ReviewPage() {
 
   async function submit() {
     if (tooShort || sending) return;
+
     setSending(true);
     setError(null);
 
@@ -112,24 +131,61 @@ export function ReviewPage() {
       )}
 
       {step === "note" && (
-        <ReviewForm
-          values={form}
-          onChange={(field, value) => {
-            setForm((prev) => ({ ...prev, [field]: value }));
-            if (error) setError(null);
+        <Form
+          className={styles.form}
+          onSubmit={(event) => {
+            event.preventDefault();
+            void submit();
           }}
-          onSubmit={submit}
-          limits={LIMITS}
-          labels={{
-            note: s.noteLabel,
-            name: s.nameLabel,
-            contact: s.contactLabel,
-            submit: sending ? s.sending : s.send,
-          }}
-          noteHint={tooShort && message.length > 0 ? s.tooShort : undefined}
-          canSubmit={!tooShort && !sending}
-          error={error}
-        />
+        >
+          <ReviewMessageField
+            label={s.noteLabel}
+            value={form.message}
+            onChange={(value) => updateField("message", value)}
+            maxLength={LIMITS.note}
+            hint={tooShort && message.length > 0 ? s.tooShort : undefined}
+          />
+
+          <ReviewTextField
+            label={s.nameLabel}
+            value={form.name}
+            onChange={(value) => updateField("name", value)}
+            maxLength={LIMITS.name}
+            autoComplete="name"
+          />
+
+          <ReviewTextField
+            label={s.contactLabel}
+            value={form.contact}
+            onChange={(value) => updateField("contact", value)}
+            maxLength={LIMITS.contact}
+          />
+
+          <input
+            type="text"
+            name="website"
+            value={form.website}
+            onChange={(event) => updateField("website", event.target.value)}
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+            className={styles.honeypot}
+          />
+
+          {error && (
+            <p role="alert" className={styles.formError}>
+              {error}
+            </p>
+          )}
+
+          <Button
+            type="submit"
+            isDisabled={tooShort || sending}
+            className={styles.submit}
+          >
+            {sending ? s.sending : s.send}
+          </Button>
+        </Form>
       )}
 
       {step === "sent" && (
