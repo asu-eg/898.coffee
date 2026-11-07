@@ -1,5 +1,7 @@
 import { PATHS, FLIP_IN_RTL, type IconName } from "./data";
 
+export type { IconName };
+
 interface IconProps {
   name: IconName;
   size?: number;

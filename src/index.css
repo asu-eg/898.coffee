@@ -31,11 +31,13 @@
   --color-charcoal: #292721;
   --color-sand: #d8c8b2;
   --color-taupe: #7a756b;
-  --color-graphite: #4b4b48;
+
+  --color-brand: #005569;
+  --color-navy: #00323f;
+  --color-arctic: #cfe3e8;
 
   --color-success: #4a7c59;
   --color-error: #b0412e;
-
   --color-scrim: rgb(41 39 33 / 0.6);
 
   --font-latin: "Montserrat Variable", system-ui, sans-serif;
@@ -163,10 +165,6 @@
       transform: scale(0.7);
     }
   }
-}
-
-@utility stagger {
-  animation-delay: calc(var(--i, 0) * 40ms);
 }
 
 @utility no-scrollbar {
