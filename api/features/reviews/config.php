@@ -7,8 +7,8 @@ return [
         'table' => 'reviews',
         'limits' => ['min_message' => 3, 'max_message' => 1000, 'max_name' => 80, 'max_contact' => 120],
         'rate_limit' => [
-            'max'    => (int) Env::get('RATE_LIMIT_MAX', '5'),
-            'window' => (int) Env::get('RATE_LIMIT_WINDOW', '600'),
+            'max'    => 5,
+            'window' => 600,
         ],
         'admin' => [
             'default_per_page' => 20,

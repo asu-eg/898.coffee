@@ -14,20 +14,20 @@ interface ReviewDrawerProps {
 
 const styles = {
   overlay:
-    "fixed inset-0 z-50 bg-scrim/60 backdrop-blur-[2px] transition-opacity duration-200 data-[state=open]:opacity-100 data-[state=closed]:opacity-0",
+    "fixed inset-0 z-50 bg-scrim backdrop-blur-[2px] transition-opacity duration-interactive ease-smooth data-[state=open]:opacity-100 data-[state=closed]:opacity-0 motion-reduce:transition-none",
   content:
-    "fixed inset-x-0 bottom-0 z-50 mx-auto mt-24 flex max-h-[90vh] w-full max-w-md flex-col rounded-t-[32px] border-t border-sand/50 bg-cream text-charcoal outline-none",
+    "fixed inset-x-0 bottom-0 z-50 mx-auto mt-24 flex max-h-[90vh] w-full max-w-md flex-col rounded-t-sheet border-t border-sand/50 bg-cream text-charcoal outline-none",
   handleContainer:
     "relative z-0 flex h-10 w-full shrink-0 items-center justify-center",
   handlePill:
     "cursor-grab touch-none rounded-full !bg-charcoal/60 [&_[data-vaul-handle-hitarea]]:!h-50 [&_[data-vaul-handle-hitarea]]:!w-999 hover:!bg-charcoal/70 active:cursor-grabbing active:!bg-charcoal/80",
   body: "flex-1 overflow-y-auto px-6",
   header: "mb-5",
-  title: "text-2xl font-bold text-charcoal leading-tight",
+  title: "text-title font-bold text-charcoal",
   closeBtn:
-    "group absolute end-4 top-1 z-10 inline-flex h-10 w-10 items-center justify-center rounded-full outline-none transition-transform active:scale-95",
+    "group absolute end-4 top-1 z-10 inline-flex h-10 w-10 items-center justify-center rounded-full outline-none transition-transform duration-interactive ease-smooth active:scale-95 motion-reduce:transition-none",
   closeVisual:
-    "flex size-8 items-center justify-center rounded-full bg-white text-brand ring-1 ring-black/5 transition group-hover:bg-arctic",
+    "flex size-8 items-center justify-center rounded-full bg-white text-brand ring-1 ring-black/5 transition-colors duration-interactive ease-smooth group-hover:bg-arctic motion-reduce:transition-none",
 };
 
 export function ReviewDrawer({

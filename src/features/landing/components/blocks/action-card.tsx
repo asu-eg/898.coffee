@@ -21,33 +21,37 @@ interface ExternalCardProps extends BaseCardProps {
 
 type ActionCardProps = InternalCardProps | ExternalCardProps;
 
+const lightCard =
+  "border-white/50 bg-white/80 text-navy hover:bg-white hover:border-brand";
+const lightArrow = "text-navy/40 group-hover:text-brand";
+
 const tones: Record<Tone, { card: string; bubble: string; arrow: string }> = {
   standard: {
-    card: "border-white/50 bg-white/80 text-navy hover:bg-white hover:border-brand",
+    card: lightCard,
     bubble: "bg-arctic/60 text-brand group-hover:bg-arctic",
-    arrow: "text-navy/40 group-hover:text-brand",
+    arrow: lightArrow,
   },
   featured: {
     card: "border-transparent bg-brand text-white hover:border-arctic",
     bubble: "bg-white text-brand",
-    arrow: "text-white/80",
+    arrow: "text-white/80 group-hover:text-white/100",
   },
   social: {
-    card: "border-white/50 bg-white/80 text-navy hover:bg-white hover:border-brand",
+    card: lightCard,
     bubble: "bg-brand text-white",
-    arrow: "text-navy/40 group-hover:text-brand",
+    arrow: lightArrow,
   },
 };
 
 const styles = {
-  card: "group flex min-h-16 w-full items-center gap-4 rounded-lg border px-4 py-3 outline-none transition-all duration-interactive ease-smooth focus-visible:ring-2 focus-visible:ring-brand active:scale-95 motion-reduce:transition-none",
+  card: "group flex min-h-16 w-full items-center gap-4 rounded-lg border px-4 py-3 outline-none transition duration-interactive ease-smooth focus-visible:ring-2 focus-visible:ring-brand active:scale-95 motion-reduce:transition-none",
   bubble:
     "flex size-11 shrink-0 items-center justify-center rounded-full transition-colors duration-interactive ease-smooth motion-reduce:transition-none",
   text: "flex min-w-0 flex-1 flex-col",
-  title: "text-heading font-bold text-balance",
+  title: "text-heading font-bold",
   hint: "text-small opacity-80",
   arrow:
-    "size-5 shrink-0 transition-all duration-interactive ease-smooth group-hover:translate-x-1 rtl:group-hover:-translate-x-1 motion-reduce:transition-none",
+    "size-5 shrink-0 transition-transform duration-interactive ease-smooth group-hover:translate-x-1 rtl:group-hover:-translate-x-1 motion-reduce:transition-none",
   srOnly: "sr-only",
 };
 

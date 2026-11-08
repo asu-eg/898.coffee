@@ -1,11 +1,7 @@
 import logo from "@/assets/mark.svg";
 import { setLocale, useLocale, useStrings } from "@/shared/i18n";
 import { ROUTES } from "@/shared/router";
-import { ActionCard } from "./components/action-card";
-import { Background } from "./components/background";
-import { Footer } from "./components/footer";
-import { Header } from "./components/header";
-import { LanguageToggle } from "./components/language-toggle";
+import * as C from "./components";
 import { site } from "./site";
 import { strings } from "./strings";
 
@@ -18,7 +14,6 @@ const styles = {
   toggle: "absolute end-6 top-6 z-10",
   nav: "flex flex-1 flex-col gap-6",
   group: "flex flex-col gap-3",
-  groupTitle: "px-1 text-small font-bold text-charcoal",
 };
 
 export function LandingPage() {
@@ -28,11 +23,11 @@ export function LandingPage() {
 
   return (
     <main className={styles.page}>
-      <Background />
+      <C.Background />
 
       <div className={styles.container}>
         <div className={styles.toggle}>
-          <LanguageToggle
+          <C.LanguageToggle
             label={s.languageName}
             ariaLabel={s.switchToLanguage}
             lang={otherLocale}
@@ -40,7 +35,7 @@ export function LandingPage() {
           />
         </div>
 
-        <Header
+        <C.Header
           brandName={site.brandName}
           logoSrc={logo}
           taglineLead={s.taglineLead}
@@ -49,14 +44,14 @@ export function LandingPage() {
 
         <nav aria-label={s.mainNav} className={styles.nav}>
           <div className={styles.group}>
-            <ActionCard
+            <C.ActionCard
               to={ROUTES.menu}
               icon="cup"
               title={s.menuTitle}
               hint={s.menuHint}
               tone="featured"
             />
-            <ActionCard
+            <C.ActionCard
               to={ROUTES.review}
               icon="star"
               title={s.reviewTitle}
@@ -65,8 +60,8 @@ export function LandingPage() {
           </div>
 
           <section className={styles.group}>
-            <h2 className={styles.groupTitle}>{s.followUs}</h2>
-            <ActionCard
+            <C.GroupTitle>{s.followUs}</C.GroupTitle>
+            <C.ActionCard
               href={site.instagram.url}
               newTabLabel={s.newTab}
               icon="instagram"
@@ -77,8 +72,8 @@ export function LandingPage() {
           </section>
 
           <section className={styles.group}>
-            <h2 className={styles.groupTitle}>{s.findUs}</h2>
-            <ActionCard
+            <C.GroupTitle>{s.findUs}</C.GroupTitle>
+            <C.ActionCard
               href={site.location.mapsUrl}
               newTabLabel={s.newTab}
               icon="pin"
@@ -87,7 +82,7 @@ export function LandingPage() {
           </section>
         </nav>
 
-        <Footer
+        <C.Footer
           lead={s.footerLead}
           emphasis={s.footerEmphasis}
           copyright={`© ${YEAR} ${site.brandName}`}
