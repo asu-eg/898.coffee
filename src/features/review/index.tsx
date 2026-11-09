@@ -1,125 +1,126 @@
-import { Form, Button } from "react-aria-components";
+import { Button } from "react-aria-components";
 import { useStrings } from "@/shared/i18n";
-import { useSheet } from "./hooks/use-sheet";
-import { useForm } from "./hooks/use-form";
-import * as C from "./components/";
 import { LIMITS } from "./config";
+import * as C from "./components";
+import { useReview } from "./hooks/use-review";
 import { strings } from "./strings";
 
 const styles = {
   choices: "flex flex-col gap-3 pb-4 animate-reveal-in",
   form: "flex flex-col gap-5 pb-2 animate-reveal-in",
-  formError:
+  error:
     "text-small rounded-md border border-error/30 bg-error/10 px-4 py-3 font-bold text-error",
   submit:
     "text-small mt-2 min-h-12 rounded-full bg-brand px-6 text-center font-bold text-white outline-none transition duration-interactive ease-smooth data-focus-visible:ring-2 data-focus-visible:ring-brand data-focus-visible:ring-offset-2 data-hovered:bg-brand/90 data-pressed:scale-[0.98] data-disabled:opacity-50 data-disabled:transition-none motion-reduce:transition-none",
   honeypot: "sr-only",
-};
+} as const;
 
 export function ReviewPage() {
   const s = useStrings(strings);
-
-  const { isOpen, close } = useSheet();
-  const sheet = useForm(close);
+  const review = useReview();
 
   return (
-    <C.Sheet
-      isOpen={isOpen}
-      onClose={sheet.close}
-      title={sheet.step === "note" ? s.noteTitle : s.sheetTitle}
-      sheetDescription={s.sheetDescription}
-      closeLabel={s.close}
+    <C.Drawer
+      isOpen={review.isOpen}
+      onClose={review.close}
+      title={review.step === "note" ? s.choices.note.title : s.drawer.title}
+      description={s.drawer.description}
+      closeLabel={s.common.close}
     >
-      {sheet.step === "choose" && (
-        <div className={styles.choices}>
+      {review.step === "choose" && (
+        <section className={styles.choices}>
           <C.ChoiceCard
             icon="star"
-            title={s.googleTitle}
-            hint={s.googleHint}
-            onPress={sheet.openGoogleReview}
+            title={s.choices.google.title}
+            hint={s.choices.google.hint}
+            onPress={review.openGoogleReview}
           />
+
           <C.ChoiceCard
             icon="chat"
-            title={s.noteTitle}
-            hint={s.noteHint}
-            onPress={sheet.goToNote}
+            title={s.choices.note.title}
+            hint={s.choices.note.hint}
+            onPress={review.goToNote}
           />
-        </div>
+        </section>
       )}
 
-      {sheet.step === "note" && (
-        <Form
+      {review.step === "note" && (
+        <form
+          noValidate
           className={styles.form}
-          onSubmit={(e) => {
-            e.preventDefault();
-            void sheet.submit();
+          onSubmit={(event) => {
+            event.preventDefault();
+            void review.submit();
           }}
         >
           <C.Field
             kind="textarea"
-            label={s.noteLabel}
-            value={sheet.form.message}
-            onChange={(v) => sheet.updateField("message", v)}
+            label={s.form.fields.message.label}
+            value={review.form.values.message}
+            onChange={(value) => review.changeField("message", value)}
             maxLength={LIMITS.note}
             required
             hint={
-              sheet.tooShort && sheet.form.message.trim().length > 0
-                ? s.tooShort
+              review.form.showTooShort
+                ? s.form.fields.message.tooShort
                 : undefined
             }
           />
 
           <C.Field
             kind="input"
-            label={s.nameLabel}
-            value={sheet.form.name}
-            onChange={(v) => sheet.updateField("name", v)}
+            label={s.form.fields.name.label}
+            value={review.form.values.name}
+            onChange={(value) => review.changeField("name", value)}
             maxLength={LIMITS.name}
             autoComplete="name"
           />
 
           <C.Field
             kind="input"
-            label={s.contactLabel}
-            value={sheet.form.contact}
-            onChange={(v) => sheet.updateField("contact", v)}
+            label={s.form.fields.contact.label}
+            value={review.form.values.contact}
+            onChange={(value) => review.changeField("contact", value)}
             maxLength={LIMITS.contact}
           />
 
           <input
             type="text"
             name="website"
-            value={sheet.form.website}
-            onChange={(e) => sheet.updateField("website", e.target.value)}
+            value={review.form.values.website}
+            onChange={(event) =>
+              review.changeField("website", event.target.value)
+            }
             tabIndex={-1}
             autoComplete="off"
             aria-hidden="true"
             className={styles.honeypot}
           />
 
-          {sheet.error && (
-            <p role="alert" className={styles.formError}>
-              {sheet.error}
+          {review.error && (
+            <p role="alert" className={styles.error}>
+              {s.form.errors[review.error]}
             </p>
           )}
 
           <Button
             type="submit"
-            isDisabled={sheet.tooShort || sheet.sending}
+            isDisabled={!review.form.isValid || review.sending}
             className={styles.submit}
           >
-            {sheet.sending ? s.sending : s.send}
+            {review.sending ? s.form.actions.sending : s.form.actions.send}
           </Button>
-        </Form>
+        </form>
       )}
 
-      {sheet.step === "sent" && (
+      {review.step === "sent" && (
         <C.ThankYou
-          message={s.thanks}
-          closeLabel={s.close}
-          onClose={sheet.close}
+          title={s.success.message}
+          closeLabel={s.common.close}
+          onClose={review.close}
         />
       )}
-    </C.Sheet>
+    </C.Drawer>
   );
 }

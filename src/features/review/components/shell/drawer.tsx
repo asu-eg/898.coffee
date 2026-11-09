@@ -1,13 +1,13 @@
 import type { ReactNode } from "react";
-import { Drawer } from "vaul";
+import { Drawer as VaulDrawer } from "vaul";
 import { Button } from "react-aria-components";
 import { Icon } from "@/shared/icons";
 
-interface ReviewDrawerProps {
+interface DrawerProps {
   isOpen: boolean;
   onClose: () => void;
   title: string;
-  sheetDescription: string;
+  description: string;
   closeLabel: string;
   children: ReactNode;
 }
@@ -30,26 +30,26 @@ const styles = {
     "flex size-8 items-center justify-center rounded-full bg-white text-brand ring-1 ring-black/5 transition-colors duration-interactive ease-smooth group-hover:bg-arctic motion-reduce:transition-none",
 };
 
-export function Sheet({
+export function Drawer({
   isOpen,
   onClose,
   title,
-  sheetDescription,
+  description,
   closeLabel,
   children,
-}: ReviewDrawerProps) {
+}: DrawerProps) {
   return (
-    <Drawer.Root
+    <VaulDrawer.Root
       open={isOpen}
       onOpenChange={(open) => !open && onClose()}
       shouldScaleBackground={false}
       handleOnly={true}
       repositionInputs={false}
     >
-      <Drawer.Portal>
-        <Drawer.Overlay className={styles.overlay} />
+      <VaulDrawer.Portal>
+        <VaulDrawer.Overlay className={styles.overlay} />
 
-        <Drawer.Content className={styles.content}>
+        <VaulDrawer.Content className={styles.content}>
           <Button
             aria-label={closeLabel}
             onPress={onClose}
@@ -61,21 +61,23 @@ export function Sheet({
           </Button>
 
           <div className={styles.handleContainer}>
-            <Drawer.Handle className={styles.handlePill} />
+            <VaulDrawer.Handle className={styles.handlePill} />
           </div>
 
           <div className={styles.body}>
             <div className={styles.header}>
-              <Drawer.Title className={styles.title}>{title}</Drawer.Title>
-              <Drawer.Description className="sr-only">
-                {sheetDescription}
-              </Drawer.Description>
+              <VaulDrawer.Title className={styles.title}>
+                {title}
+              </VaulDrawer.Title>
+              <VaulDrawer.Description className="sr-only">
+                {description}
+              </VaulDrawer.Description>
             </div>
 
             {children}
           </div>
-        </Drawer.Content>
-      </Drawer.Portal>
-    </Drawer.Root>
+        </VaulDrawer.Content>
+      </VaulDrawer.Portal>
+    </VaulDrawer.Root>
   );
 }

@@ -1,5 +1,5 @@
 import { LandingPage } from "@/features/landing/";
-import { NotFoundPage } from "@/features/not-found/not-found-page";
+import { NotFoundPage } from "@/features/not-found/";
 import { ReviewPage } from "@/features/review";
 // import { MenuPage } from "@/features/menu";
 import { ROUTES, Route, Switch } from "@/shared/router";

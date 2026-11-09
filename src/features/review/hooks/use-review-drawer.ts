@@ -1,6 +1,6 @@
-import { useLocation, ROUTES } from "@/shared/router";
+import { ROUTES, useLocation } from "@/shared/router";
 
-export function useSheet() {
+export function useReviewDrawer() {
   const [location, setLocation] = useLocation();
 
   return {

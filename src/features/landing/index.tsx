@@ -12,6 +12,8 @@ const styles = {
   headerSlot: "pt-10",
   toggleSlot: "absolute end-6 top-6 z-10",
   navSlot: "flex flex-1 flex-col gap-6",
+  group: "flex flex-col gap-3",
+  cards: "flex flex-col gap-3",
 };
 
 export function LandingPage() {
@@ -25,8 +27,8 @@ export function LandingPage() {
       <div className={styles.container}>
         <div className={styles.toggleSlot}>
           <C.LanguageToggle
-            label={s.languageName}
-            ariaLabel={s.switchToLanguage}
+            label={s.language.name}
+            ariaLabel={s.language.switchTo}
             lang={otherLocale}
             onPress={() => setLocale(otherLocale)}
           />
@@ -36,60 +38,60 @@ export function LandingPage() {
           <C.Header
             brandName={site.brandName}
             logoSrc={logo}
-            taglineLead={s.taglineLead}
-            taglineEmphasis={s.taglineEmphasis}
+            taglineLead={s.header.taglineLead}
+            taglineEmphasis={s.header.taglineEmphasis}
           />
         </div>
 
-        <nav aria-label={s.mainNav} className={styles.navSlot}>
-          <C.NavSection
-            cards={[
-              {
-                to: ROUTES.menu,
-                icon: "cup",
-                title: s.menuTitle,
-                hint: s.menuHint,
-                tone: "featured",
-              },
-              {
-                to: ROUTES.review,
-                icon: "star",
-                title: s.reviewTitle,
-                hint: s.reviewHint,
-              },
-            ]}
-          />
+        <nav aria-label={s.nav.mainNav} className={styles.navSlot}>
+          <div className={styles.group}>
+            <div className={styles.cards}>
+              <C.ActionCard
+                to={ROUTES.menu}
+                icon="cup"
+                title={s.sections.primary.menuTitle}
+                hint={s.sections.primary.menuHint}
+                tone="featured"
+              />
+              <C.ActionCard
+                to={ROUTES.review}
+                icon="star"
+                title={s.sections.primary.reviewTitle}
+                hint={s.sections.primary.reviewHint}
+              />
+            </div>
+          </div>
 
-          <C.NavSection
-            title={s.followUs}
-            cards={[
-              {
-                href: site.instagram.url,
-                newTabLabel: s.newTab,
-                icon: "instagram",
-                title: site.instagram.name,
-                hint: site.instagram.handle,
-                tone: "social",
-              },
-            ]}
-          />
+          <section className={styles.group}>
+            <C.SectionTitle>{s.sections.social.title}</C.SectionTitle>
+            <div className={styles.cards}>
+              <C.ActionCard
+                href={site.instagram.url}
+                newTabLabel={s.nav.newTab}
+                icon="instagram"
+                title={site.instagram.name}
+                hint={site.instagram.handle}
+                tone="social"
+              />
+            </div>
+          </section>
 
-          <C.NavSection
-            title={s.findUs}
-            cards={[
-              {
-                href: site.location.mapsUrl,
-                newTabLabel: s.newTab,
-                icon: "pin",
-                title: s.locationName,
-              },
-            ]}
-          />
+          <section className={styles.group}>
+            <C.SectionTitle>{s.sections.location.title}</C.SectionTitle>
+            <div className={styles.cards}>
+              <C.ActionCard
+                href={site.location.mapsUrl}
+                newTabLabel={s.nav.newTab}
+                icon="pin"
+                title={s.sections.location.locationName}
+              />
+            </div>
+          </section>
         </nav>
 
         <C.Footer
-          lead={s.footerLead}
-          emphasis={s.footerEmphasis}
+          lead={s.footer.lead}
+          emphasis={s.footer.emphasis}
           brandName={site.brandName}
         />
       </div>

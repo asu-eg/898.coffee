@@ -29,11 +29,11 @@ export function NotFoundPage() {
           decoding="async"
           className={styles.logo}
         />
-        <p className={styles.code}>{s.code}</p>
-        <h1 className={styles.title}>{s.title}</h1>
-        <p className={styles.message}>{s.message}</p>
+        <p className={styles.code}>{s.page.code}</p>
+        <h1 className={styles.title}>{s.page.title}</h1>
+        <p className={styles.message}>{s.page.message}</p>
         <Link href={ROUTES.landing} className={styles.link}>
-          {s.home}
+          {s.actions.home}
         </Link>
       </div>
     </main>
