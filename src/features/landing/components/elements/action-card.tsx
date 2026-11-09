@@ -1,31 +1,35 @@
-import { Icon, type IconName } from "@/shared/icons";
-import { Link, type AppRoute } from "@/shared/router";
+import { Icon } from "@/shared/icons";
+import { Link } from "@/shared/router";
+import type { IconName } from "@/shared/icons";
+import type { AppRoute } from "@/shared/router";
 
-type Tone = "standard" | "featured" | "social";
+type ActionCardTone = "standard" | "featured" | "social";
 
-interface BaseCardProps {
+interface BaseActionCardProps {
   icon: IconName;
   title: string;
   hint?: string;
-  tone?: Tone;
+  tone?: ActionCardTone;
 }
 
-interface InternalCardProps extends BaseCardProps {
+interface InternalActionCardProps extends BaseActionCardProps {
   to: AppRoute;
 }
 
-interface ExternalCardProps extends BaseCardProps {
+interface ExternalActionCardProps extends BaseActionCardProps {
   href: string;
   newTabLabel: string;
 }
 
-type ActionCardProps = InternalCardProps | ExternalCardProps;
+type ActionCardProps =
+  | InternalActionCardProps
+  | ExternalActionCardProps;
 
 const lightCard =
   "border-white/50 bg-white/80 text-navy hover:bg-white hover:border-brand";
 const lightArrow = "text-navy/40 group-hover:text-brand";
 
-const tones: Record<Tone, { card: string; bubble: string; arrow: string }> = {
+const tones = {
   standard: {
     card: lightCard,
     bubble: "bg-arctic/60 text-brand group-hover:bg-arctic",
@@ -41,7 +45,7 @@ const tones: Record<Tone, { card: string; bubble: string; arrow: string }> = {
     bubble: "bg-brand text-white",
     arrow: lightArrow,
   },
-};
+} as const;
 
 const styles = {
   card: "group flex min-h-16 w-full items-center gap-4 rounded-lg border px-4 py-3 outline-none transition duration-interactive ease-smooth focus-visible:ring-2 focus-visible:ring-brand active:scale-95 motion-reduce:transition-none",

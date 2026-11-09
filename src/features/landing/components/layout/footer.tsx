@@ -1,8 +1,10 @@
 interface FooterProps {
   lead: string;
   emphasis: string;
-  copyright: string;
+  brandName: string;
 }
+
+const currentYear = new Date().getFullYear();
 
 const styles = {
   footer: "flex flex-col items-center gap-2 text-center",
@@ -11,14 +13,15 @@ const styles = {
   copyright: "text-caption whitespace-nowrap text-navy/80",
 };
 
-export function Footer({ lead, emphasis, copyright }: FooterProps) {
+export function Footer({ lead, emphasis, brandName }: FooterProps) {
   return (
     <footer className={styles.footer}>
       <p className={styles.lead}>
         {lead} <span className={styles.emphasis}>{emphasis}</span>
       </p>
+
       <p dir="ltr" className={styles.copyright}>
-        {copyright}
+        {`© ${currentYear} ${brandName}`}
       </p>
     </footer>
   );
