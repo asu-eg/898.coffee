@@ -69,3 +69,32 @@ export async function postJson<T = unknown>(
     throw new ApiError(0, "NETWORK_ERROR", "Network error occurred");
   }
 }
+
+export async function getJson<T = unknown>(endpoint: string): Promise<T> {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), API_CONFIG.timeoutMs);
+
+  try {
+    const response = await fetch(`${API_CONFIG.baseUrl}${endpoint}`, {
+      method: "GET",
+      headers: { Accept: "application/json" },
+      signal: controller.signal,
+    });
+
+    clearTimeout(timeoutId);
+
+    if (!response.ok) {
+      const { code, message } = await parseErrorResponse(response);
+      throw new ApiError(response.status, code, message);
+    }
+
+    return await response.json();
+  } catch (err: unknown) {
+    clearTimeout(timeoutId);
+    if (err instanceof ApiError) throw err;
+    if (err instanceof Error && err.name === "AbortError") {
+      throw new ApiError(408, "TIMEOUT", "Request timed out");
+    }
+    throw new ApiError(0, "NETWORK_ERROR", "Network error occurred");
+  }
+}

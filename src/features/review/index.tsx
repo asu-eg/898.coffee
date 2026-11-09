@@ -1,7 +1,7 @@
 import { Form, Button } from "react-aria-components";
 import { useStrings } from "@/shared/i18n";
-import { useReviewSheet } from "./hooks/use-review-sheet";
-import { useReviewForm } from "./hooks/use-review-form";
+import { useSheet } from "./hooks/use-sheet";
+import { useForm } from "./hooks/use-form";
 import * as C from "./components/";
 import { LIMITS } from "./config";
 import { strings } from "./strings";
@@ -19,11 +19,11 @@ const styles = {
 export function ReviewPage() {
   const s = useStrings(strings);
 
-  const { isOpen, close } = useReviewSheet();
-  const sheet = useReviewForm(close);
+  const { isOpen, close } = useSheet();
+  const sheet = useForm(close);
 
   return (
-    <C.ReviewDrawer
+    <C.Sheet
       isOpen={isOpen}
       onClose={sheet.close}
       title={sheet.step === "note" ? s.noteTitle : s.sheetTitle}
@@ -55,7 +55,7 @@ export function ReviewPage() {
             void sheet.submit();
           }}
         >
-          <C.ReviewField
+          <C.Field
             kind="textarea"
             label={s.noteLabel}
             value={sheet.form.message}
@@ -69,7 +69,7 @@ export function ReviewPage() {
             }
           />
 
-          <C.ReviewField
+          <C.Field
             kind="input"
             label={s.nameLabel}
             value={sheet.form.name}
@@ -78,7 +78,7 @@ export function ReviewPage() {
             autoComplete="name"
           />
 
-          <C.ReviewField
+          <C.Field
             kind="input"
             label={s.contactLabel}
             value={sheet.form.contact}
@@ -120,6 +120,6 @@ export function ReviewPage() {
           onClose={sheet.close}
         />
       )}
-    </C.ReviewDrawer>
+    </C.Sheet>
   );
 }

@@ -29,7 +29,7 @@ interface ReviewFieldProps {
   hint?: string;
 }
 
-export function ReviewField({
+export function Field({
   kind,
   label,
   value,

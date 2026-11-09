@@ -30,7 +30,7 @@ const styles = {
     "flex size-8 items-center justify-center rounded-full bg-white text-brand ring-1 ring-black/5 transition-colors duration-interactive ease-smooth group-hover:bg-arctic motion-reduce:transition-none",
 };
 
-export function ReviewDrawer({
+export function Sheet({
   isOpen,
   onClose,
   title,

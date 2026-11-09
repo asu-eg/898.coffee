@@ -9,7 +9,7 @@ define('API_ENTRY', true);
 require __DIR__ . '/../core/autoloader.php';
 Autoloader::register(dirname(__DIR__));
 
-Env::load(dirname(__DIR__, 2) . '/.env');
+Env::load(dirname(__DIR__) . '/.env');
 $config  = require __DIR__ . '/../appsettings.php';
 $authCfg = $config['features']['auth'];
 
@@ -30,7 +30,6 @@ if (strlen($password) < $authCfg['password']['min']) {
     die("Error: Password must be at least {$authCfg['password']['min']} characters.\n");
 }
 
-// Fixed: added max length check (bcrypt silently truncates at 72 bytes)
 if (strlen($password) > $authCfg['password']['max']) {
     die("Error: Password must be at most {$authCfg['password']['max']} characters.\n");
 }

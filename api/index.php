@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', '0');
+ini_set('log_errors', '1');
+
 define('API_ENTRY', true);
 
 require __DIR__ . '/core/autoloader.php';

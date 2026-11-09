@@ -5,6 +5,7 @@ import { GOOGLE_REVIEW_URL, LIMITS, REVIEW_API } from "../config";
 import { strings } from "../strings";
 
 type Step = "choose" | "note" | "sent";
+
 type FormValues = {
   message: string;
   name: string;
@@ -14,7 +15,7 @@ type FormValues = {
 
 const EMPTY: FormValues = { message: "", name: "", contact: "", website: "" };
 
-export function useReviewForm(onClose: () => void) {
+export function useForm(onClose: () => void) {
   const s = useStrings(strings);
 
   const [step, setStep] = useState<Step>("choose");
