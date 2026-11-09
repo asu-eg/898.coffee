@@ -1,7 +1,7 @@
 import logo from "@/assets/mark.svg";
 import { useStrings } from "@/shared/i18n";
 import { Link, ROUTES } from "@/shared/router";
-import * as C from "./components/";
+import * as C from "./components";
 import { strings } from "./strings";
 
 const styles = {
@@ -14,8 +14,6 @@ const styles = {
   link: "mt-8 inline-flex min-h-12 items-center justify-center rounded-full bg-brand px-6 text-small font-bold text-white transition-colors duration-interactive ease-smooth hover:bg-navy focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand motion-reduce:transition-none",
 };
 
-const homeLink = ROUTES.landing;
-
 export function NotFoundPage() {
   const s = useStrings(strings);
 
@@ -23,13 +21,18 @@ export function NotFoundPage() {
     <main className={styles.page}>
       <C.Background />
       <div className={styles.content}>
-        <img src={logo} alt="898 Coffee" className={styles.logo} />
-        <p aria-hidden="true" className={styles.code}>
-          {s.code}
-        </p>
+        <img
+          src={logo}
+          width={462}
+          height={447}
+          fetchPriority="high"
+          decoding="async"
+          className={styles.logo}
+        />
+        <p className={styles.code}>{s.code}</p>
         <h1 className={styles.title}>{s.title}</h1>
         <p className={styles.message}>{s.message}</p>
-        <Link href={homeLink} className={styles.link}>
+        <Link href={ROUTES.landing} className={styles.link}>
           {s.home}
         </Link>
       </div>
