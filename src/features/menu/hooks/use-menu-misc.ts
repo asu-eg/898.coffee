@@ -1,8 +1,9 @@
-import { useMenuData } from "./use-menu-data";
-import type { Pairing, Popup, Product } from "../models";
+import type { MenuStatus } from "./use-menu";
+import type { Pairing, Popup, Product } from "../types/menu-models";
 
-export function useMenuMisc() {
-  const menu = useMenuData();
+export function buildMenuMisc(menu: MenuStatus) {
+  const currency = (): string =>
+    menu.status === "ready" ? menu.data.currency : "";
 
   const signatures = (): Product[] =>
     menu.status === "ready" ? menu.data.signatures : [];
@@ -10,7 +11,7 @@ export function useMenuMisc() {
   const pairings = (): Pairing[] =>
     menu.status === "ready" ? menu.data.pairings : [];
 
-  const pairing = (id: string): Pairing | undefined => {
+  const pairingById = (id: string): Pairing | undefined => {
     if (menu.status !== "ready") return undefined;
     return menu.data.pairings.find((p) => p.id === id);
   };
@@ -18,8 +19,5 @@ export function useMenuMisc() {
   const popup = (): Popup | undefined =>
     menu.status === "ready" ? menu.data.popup : undefined;
 
-  const currency = (): string =>
-    menu.status === "ready" ? menu.data.currency : "";
-
-  return { signatures, pairings, pairing, popup, currency };
+  return { currency, signatures, pairings, pairingById, popup };
 }

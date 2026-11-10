@@ -1,18 +1,16 @@
-import { useMenuData } from "./use-menu-data";
-import type { Product } from "../models";
+import type { MenuStatus } from "./use-menu";
+import type { Product } from "../types/menu-models";
 
 export type ProductStatus =
   | { status: "loading" }
   | { status: "ready"; data: Product }
   | { status: "not-found" }
-  | { status: "error"; error: unknown };
+  | { status: "error" };
 
-export function useMenuProducts() {
-  const menu = useMenuData();
-
+export function buildMenuProducts(menu: MenuStatus) {
   const byId = (id: string): ProductStatus => {
     if (menu.status === "loading") return { status: "loading" };
-    if (menu.status === "error") return { status: "error", error: menu.error };
+    if (menu.status === "error") return { status: "error" };
 
     const product = menu.data.productMap[id];
     if (!product) return { status: "not-found" };

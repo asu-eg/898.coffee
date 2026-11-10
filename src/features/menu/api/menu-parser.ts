@@ -1,4 +1,4 @@
-import { BADGE_RANK } from "./config";
+import { BADGE_RANK } from "../config";
 import type {
   AddOn,
   BadgeKind,
@@ -10,66 +10,16 @@ import type {
   PriceOption,
   Product,
   ProductRef,
-} from "./models";
-
-interface RawName {
-  en: string;
-  ar: string;
-}
-
-interface RawAddOn {
-  name: RawName;
-  price: number;
-}
-
-interface RawPriceOption {
-  id: string;
-  name: RawName | null;
-  price: number;
-  discount: number;
-  final: number;
-}
-
-interface RawPricing {
-  type: "single" | "sizes";
-  options: RawPriceOption[];
-}
-
-interface RawProduct {
-  id: string;
-  name: RawName;
-  description: RawName;
-  image: string | null;
-  availability: string;
-  badge: string | null;
-  addOns: string[];
-  baristaWay: string[] | null;
-  oftenOrderedWith: string[];
-  pricing: RawPricing;
-}
-
-interface RawCategory {
-  id: string;
-  name: RawName;
-  products: RawProduct[];
-}
-
-interface RawPairing {
-  id: string;
-  items: string[];
-  pricing: { price: number; discount: number; final: number };
-}
-
-interface RawMenu {
-  updatedAt: string;
-  currency: string;
-  badges: string[];
-  addOns: Record<string, RawAddOn>;
-  categories: RawCategory[];
-  signatures: string[];
-  pairings: RawPairing[];
-  popup: { enabled: boolean; image: string | null; delaySeconds: number };
-}
+} from "../types/menu-models";
+import type {
+  RawAddOn,
+  RawCategory,
+  RawMenuResponse,
+  RawPairing,
+  RawPriceOption,
+  RawPricing,
+  RawProduct,
+} from "../types/menu-response";
 
 class AddOnParser {
   static parse(id: string, raw: RawAddOn): AddOn {
@@ -117,7 +67,7 @@ class ProductParser {
       description: raw.description,
       image: raw.image,
       availability: raw.availability as Product["availability"],
-      badge: raw.badge as BadgeKind | null, // ← was just raw.badge (string | null)
+      badge: raw.badge as BadgeKind | null,
       pricing: PricingParser.parse(raw.pricing),
       addOns: resolveAddOns(raw.addOns),
       baristaWay: resolveAddOns(raw.baristaWay),
@@ -170,12 +120,10 @@ class PairingParser {
 }
 
 export class MenuParser {
-  static parse(raw: unknown): Menu {
-    const data = raw as RawMenu;
+  static parse(raw: RawMenuResponse): Menu {
+    const addOnMap = AddOnParser.parseMap(raw.addOns);
 
-    const addOnMap = AddOnParser.parseMap(data.addOns);
-
-    const categories = data.categories.map((cat) =>
+    const categories = raw.categories.map((cat) =>
       CategoryParser.parse(cat, addOnMap)
     );
 
@@ -186,7 +134,7 @@ export class MenuParser {
       }
     }
 
-    for (const cat of data.categories) {
+    for (const cat of raw.categories) {
       for (const rawProduct of cat.products) {
         const product = productMap[rawProduct.id];
         if (!product) continue;
@@ -197,19 +145,17 @@ export class MenuParser {
       }
     }
 
-    const popup: Popup = data.popup;
+    const popup: Popup = raw.popup;
 
     return {
-      updatedAt: data.updatedAt,
-      currency: data.currency,
-      badges: data.badges,
+      updatedAt: raw.updatedAt,
+      currency: raw.currency,
+      badges: raw.badges,
       categories,
-      signatures: data.signatures
+      signatures: raw.signatures
         .map((id) => productMap[id])
         .filter((p): p is Product => p !== undefined),
-      pairings: data.pairings.map((raw) =>
-        PairingParser.parse(raw, productMap)
-      ),
+      pairings: raw.pairings.map((p) => PairingParser.parse(p, productMap)),
       popup,
       productMap,
       addOnMap,

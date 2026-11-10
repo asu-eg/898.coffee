@@ -1,16 +1,14 @@
-import { useMenuData } from "./use-menu-data";
-import type { Category } from "../models";
+import type { MenuStatus } from "./use-menu";
+import type { Category } from "../types/menu-models";
 
 export type CategoriesStatus =
   | { status: "loading" }
   | { status: "ready"; data: Category[] }
-  | { status: "error"; error: unknown };
+  | { status: "error" };
 
-export function useMenuCategories() {
-  const menu = useMenuData();
-
+export function buildMenuCategories(menu: MenuStatus) {
   const all = (): CategoriesStatus => {
-    if (menu.status !== "ready") return menu;
+    if (menu.status !== "ready") return { status: menu.status };
     return { status: "ready", data: menu.data.categories };
   };
 

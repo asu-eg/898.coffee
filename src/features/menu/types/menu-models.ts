@@ -17,6 +17,7 @@ export interface PriceOption {
   discount: number;
   final: number;
 }
+
 export interface Pricing {
   type: "single" | "sizes";
   options: PriceOption[];
@@ -30,6 +31,7 @@ export interface ProductRef {
   badge: BadgeKind | null;
   pricing: Pricing;
 }
+
 export interface Product extends ProductRef {
   description: Localized<string>;
   addOns: AddOn[];
