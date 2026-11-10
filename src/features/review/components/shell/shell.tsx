@@ -2,16 +2,15 @@ import type { ReactNode } from "react";
 import { Drawer as VaulDrawer } from "vaul";
 import { Button } from "react-aria-components";
 import { Icon } from "@/shared/icons";
+import { useStrings } from "@/shared/i18n";
+import { strings } from "../../strings";
 
-interface DrawerProps {
+interface ReviewShellProps {
   isOpen: boolean;
+  isNoteStep: boolean;
   onClose: () => void;
-  title: string;
-  description: string;
-  closeLabel: string;
   children: ReactNode;
-  className?: string;
-} 
+}
 
 const styles = {
   overlay:
@@ -25,39 +24,38 @@ const styles = {
   body: "flex-1 overflow-y-auto px-6",
   header: "mb-5",
   title: "text-title font-bold text-charcoal",
-  closeBtn:
+  closeButton:
     "group absolute end-4 top-1 z-10 inline-flex h-10 w-10 items-center justify-center rounded-full outline-none transition-transform duration-interactive ease-smooth active:scale-95 motion-reduce:transition-none",
   closeVisual:
     "flex size-8 items-center justify-center rounded-full bg-white text-brand ring-1 ring-black/5 transition-colors duration-interactive ease-smooth group-hover:bg-arctic motion-reduce:transition-none",
-} as const;
+};
 
-export function Drawer({
+export function ReviewShell({
   isOpen,
+  isNoteStep,
   onClose,
-  title,
-  description,
-  closeLabel,
   children,
-  className,
-}: DrawerProps) {
+}: ReviewShellProps) {
+  const s = useStrings(strings);
+
   return (
     <VaulDrawer.Root
       open={isOpen}
-      onOpenChange={(open) => !open && onClose()}
+      onOpenChange={(open) => {
+        if (!open) onClose();
+      }}
       shouldScaleBackground={false}
-      handleOnly={true}
+      handleOnly
       repositionInputs={false}
     >
       <VaulDrawer.Portal>
         <VaulDrawer.Overlay className={styles.overlay} />
 
-        <VaulDrawer.Content
-          className={`${styles.content} ${className ?? ""}`}
-        >
+        <VaulDrawer.Content className={styles.content}>
           <Button
-            aria-label={closeLabel}
+            aria-label={s.common.close}
             onPress={onClose}
-            className={styles.closeBtn}
+            className={styles.closeButton}
           >
             <span className={styles.closeVisual}>
               <Icon name="close" size={20} />
@@ -71,10 +69,10 @@ export function Drawer({
           <div className={styles.body}>
             <div className={styles.header}>
               <VaulDrawer.Title className={styles.title}>
-                {title}
+                {isNoteStep ? s.choices.note.title : s.drawer.title}
               </VaulDrawer.Title>
               <VaulDrawer.Description className="sr-only">
-                {description}
+                {s.drawer.description}
               </VaulDrawer.Description>
             </div>
 

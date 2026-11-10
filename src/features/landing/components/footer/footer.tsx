@@ -1,7 +1,8 @@
+import { useStrings } from "@/shared/i18n";
+import { site } from "../../data";
+import { strings } from "../../strings";
+
 interface FooterProps {
-  lead: string;
-  emphasis: string;
-  brandName: string;
   className?: string;
 }
 
@@ -14,15 +15,17 @@ const styles = {
   copyright: "text-caption whitespace-nowrap text-navy/80",
 } as const;
 
-export function Footer({ lead, emphasis, brandName, className }: FooterProps) {
+export function Footer({ className }: FooterProps) {
+  const s = useStrings(strings);
+
   return (
     <footer className={`${styles.footer} ${className ?? ""}`}>
       <p className={styles.lead}>
-        {lead} <span className={styles.emphasis}>{emphasis}</span>
+        {s.footer.lead}{" "}
+        <span className={styles.emphasis}>{s.footer.emphasis}</span>
       </p>
-
       <p dir="ltr" className={styles.copyright}>
-        {`© ${currentYear} ${brandName}`}
+        {`© ${currentYear} ${site.brandName}`}
       </p>
     </footer>
   );

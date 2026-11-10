@@ -1,8 +1,10 @@
-export { Background } from "./layout/background";
-export { LanguageToggle } from "./layout/language-toggle";
+export { Background } from "./background/background";
 
-export { Header } from "./layout/header";
-export { Footer } from "./layout/footer";
+export { LanguageToggle } from "./header/language-toggle";
+export { Header } from "./header/header";
 
-export { ActionCard } from "./elements/action-card";
-export { SectionTitle } from "./elements/section-title";
+export { PrimaryNavSection } from "./navigation/primary-nav-section";
+export { SocialNavSection } from "./navigation/social-nav-section";
+export { LocationNavSection } from "./navigation/location-nav-section";
+
+export { Footer } from "./footer/footer";

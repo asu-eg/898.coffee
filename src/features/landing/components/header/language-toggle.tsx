@@ -1,10 +1,8 @@
 import { Button } from "react-aria-components";
+import { setLocale, useLocale, useStrings } from "@/shared/i18n";
+import { strings } from "../../strings";
 
 interface LanguageToggleProps {
-  label: string;
-  ariaLabel: string;
-  lang?: string;
-  onPress: () => void;
   className?: string;
 }
 
@@ -15,21 +13,19 @@ const styles = {
     "inline-flex min-h-10 min-w-10 items-center justify-center rounded-full bg-white/85 px-4 text-small font-bold whitespace-nowrap text-navy transition duration-interactive ease-smooth group-data-hovered:bg-white group-data-pressed:scale-[0.97] group-data-focus-visible:outline-2 group-data-focus-visible:outline-offset-2 group-data-focus-visible:outline-brand motion-reduce:transition-none",
 } as const;
 
-export function LanguageToggle({
-  label,
-  ariaLabel,
-  lang,
-  onPress,
-  className,
-}: LanguageToggleProps) {
+export function LanguageToggle({ className }: LanguageToggleProps) {
+  const locale = useLocale();
+  const otherLocale = locale === "en" ? "ar" : "en";
+  const s = useStrings(strings);
+
   return (
     <Button
-      onPress={onPress}
-      aria-label={ariaLabel}
+      onPress={() => setLocale(otherLocale)}
+      aria-label={s.language.switchTo}
       className={`${styles.button} ${className ?? ""}`}
     >
-      <span lang={lang} className={styles.surface}>
-        {label}
+      <span lang={otherLocale} className={styles.surface}>
+        {s.language.name}
       </span>
     </Button>
   );

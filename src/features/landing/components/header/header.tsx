@@ -1,8 +1,9 @@
+import logo from "@/assets/mark.svg";
+import { useStrings } from "@/shared/i18n";
+import { site } from "../../data";
+import { strings } from "../../strings";
+
 interface HeaderProps {
-  brandName: string;
-  logoSrc: string;
-  taglineLead: string;
-  taglineEmphasis: string;
   className?: string;
 }
 
@@ -13,19 +14,15 @@ const styles = {
   emphasis: "font-bold text-brand",
 } as const;
 
-export function Header({
-  brandName,
-  logoSrc,
-  taglineLead,
-  taglineEmphasis,
-  className,
-}: HeaderProps) {
+export function Header({ className }: HeaderProps) {
+  const s = useStrings(strings);
+
   return (
     <header className={`${styles.header} ${className ?? ""}`}>
       <h1>
         <img
-          src={logoSrc}
-          alt={brandName}
+          src={logo}
+          alt={site.brandName}
           width={462}
           height={447}
           fetchPriority="high"
@@ -34,7 +31,8 @@ export function Header({
         />
       </h1>
       <p className={styles.tagline}>
-        {taglineLead} <span className={styles.emphasis}>{taglineEmphasis}</span>
+        {s.header.taglineLead}{" "}
+        <span className={styles.emphasis}>{s.header.taglineEmphasis}</span>
       </p>
     </header>
   );

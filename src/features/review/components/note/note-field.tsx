@@ -7,7 +7,7 @@ import {
   TextField,
 } from "react-aria-components";
 
-interface FieldProps {
+interface NoteFieldProps {
   kind: "input" | "textarea";
   label: string;
   value: string;
@@ -17,7 +17,6 @@ interface FieldProps {
   autoComplete?: string;
   rows?: number;
   hint?: string;
-  className?: string;
 }
 
 const styles = {
@@ -28,9 +27,9 @@ const styles = {
   textarea: "min-h-32 resize-y",
   hint: "text-caption text-navy/65",
   error: "text-caption text-error",
-} as const;
+};
 
-export function Field({
+export function NoteField({
   kind,
   label,
   value,
@@ -40,14 +39,13 @@ export function Field({
   autoComplete,
   rows = 5,
   hint,
-  className,
-}: FieldProps) {
+}: NoteFieldProps) {
   return (
     <TextField
       value={value}
       onChange={onChange}
       isRequired={required}
-      className={`${styles.wrapper} ${className ?? ""}`}
+      className={styles.wrapper}
     >
       <Label className={styles.label}>{label}</Label>
 
