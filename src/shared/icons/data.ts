@@ -8,6 +8,7 @@ export const PATHS = {
   check: "M5 12.5l4.5 4.5L19 7.5",
   close: "M6 6l12 12M18 6L6 18",
   chat: "M4.5 5.5h15a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H9l-4.5 3.5V6.5a1 1 0 0 1 1-1z",
+  menu: "M4 6h16M4 12h16M4 18h16",
 } as const;
 
 export const FLIP_IN_RTL = new Set<IconName>(["arrow"]);

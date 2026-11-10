@@ -1,10 +1,10 @@
 import { Button } from "react-aria-components";
 import { useLocale, useStrings } from "@/shared/i18n";
 import type { Product, Pricing } from "@/features/menu/types/menu-models";
-import { menuStrings } from "@/features/menu/strings";
+import { strings } from "@/features/menu/strings";
 import { Badge } from "../ui/badge";
 import { Chevron } from "../ui/chevron";
-import { Picture } from "../ui/picture";
+import { MenuImage } from "../ui/menu-image";
 import { Price } from "../ui/price";
 
 interface ProductCardProps {
@@ -71,7 +71,7 @@ export function ProductCard({
   className,
 }: ProductCardProps) {
   const locale = useLocale();
-  const t = useStrings(menuStrings);
+  const t = useStrings(strings);
 
   const inStock = product.availability === "in_stock";
   const displayPrice = resolveProductPrice(product.pricing);
@@ -95,7 +95,7 @@ export function ProductCard({
       onPress={onPress}
       className={[styles.root, className].filter(Boolean).join(" ")}
     >
-      <Picture
+      <MenuImage
         src={product.image}
         alt={product.name[locale]}
         className={[styles.image, !inStock && styles.imageUnavailable]
@@ -124,6 +124,7 @@ export function ProductCard({
                 <span className={styles.fromLabel}>{t.price.from}</span>
               )}
               <Price
+                locale={locale}
                 value={displayPrice.final}
                 currency={currency}
                 regularValue={displayPrice.regular}

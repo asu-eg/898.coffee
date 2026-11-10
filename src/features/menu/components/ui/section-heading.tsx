@@ -1,4 +1,5 @@
 interface SectionHeadingProps {
+  id?: string;
   title: string;
   subtitle?: string;
   className?: string;
@@ -11,13 +12,14 @@ const styles = {
 } as const;
 
 export function SectionHeading({
+  id,
   title,
   subtitle,
   className,
 }: SectionHeadingProps) {
   return (
     <div className={[styles.root, className].filter(Boolean).join(" ")}>
-      <h2 className={styles.title}>{title}</h2>
+      <h2 id={id} className={styles.title}>{title}</h2>
       {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
     </div>
   );

@@ -3,7 +3,7 @@ import { Button } from "react-aria-components";
 import { useLocale } from "@/shared/i18n";
 import type { Pairing } from "@/features/menu/types/menu-models";
 import { Chevron } from "../ui/chevron";
-import { Picture } from "../ui/picture";
+import { MenuImage } from "../ui/menu-image";
 import { Price } from "../ui/price";
 
 interface PairingCardProps {
@@ -82,7 +82,7 @@ export function PairingCard({
                   +
                 </span>
               )}
-              <Picture
+              <MenuImage
                 src={item.image}
                 alt={item.name[locale]}
                 className={[
@@ -126,6 +126,7 @@ export function PairingCard({
           .join(" ")}
       >
         <Price
+          locale={locale}
           value={pricing.final}
           currency={currency}
           regularValue={hasDiscount ? pricing.price : undefined}
