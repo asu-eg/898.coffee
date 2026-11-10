@@ -1,10 +1,11 @@
-import { useLocale } from "@/shared/i18n";
+import type { Locale } from "@/shared/i18n";
 
 type PriceSize = "caption" | "small" | "body" | "heading";
 
 interface PriceProps {
   value: number;
   currency: string;
+  locale: Locale;
   regularValue?: number | null;
   size?: PriceSize;
   className?: string;
@@ -23,7 +24,7 @@ const sizeClasses: Record<PriceSize, string> = {
   heading: "text-heading",
 } as const;
 
-function formatPrice(value: number, currency: string, locale: string): string {
+function formatPrice(value: number, currency: string, locale: Locale) {
   return new Intl.NumberFormat(locale, {
     style: "currency",
     currency,
@@ -35,29 +36,26 @@ function formatPrice(value: number, currency: string, locale: string): string {
 export function Price({
   value,
   currency,
+  locale,
   regularValue,
   size = "small",
   className,
 }: PriceProps) {
-  const locale = useLocale();
-
-  const currentFormatted = formatPrice(value, currency, locale);
-  const regularFormatted =
+  const currentPrice = formatPrice(value, currency, locale);
+  const regularPrice =
     regularValue != null && regularValue > value
       ? formatPrice(regularValue, currency, locale)
       : null;
 
-  const sizeClass = sizeClasses[size];
-
   return (
     <span className={[styles.root, className].filter(Boolean).join(" ")}>
-      <bdi className={[sizeClass, styles.current].join(" ")}>
-        {currentFormatted}
+      <bdi className={[sizeClasses[size], styles.current].join(" ")}>
+        {currentPrice}
       </bdi>
 
-      {regularFormatted !== null && (
+      {regularPrice !== null && (
         <bdi className={[sizeClasses.caption, styles.regular].join(" ")}>
-          {regularFormatted}
+          {regularPrice}
         </bdi>
       )}
     </span>

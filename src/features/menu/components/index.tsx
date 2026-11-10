@@ -1,10 +1,11 @@
-// Phase 1 — UI atoms
-export { Picture } from "./ui/picture";
-export { Price } from "./ui/price";
+// Menu-specific presentational primitives.
 export { Badge } from "./ui/badge";
 export { Chevron } from "./ui/chevron";
+export { MenuImage } from "./ui/menu-image";
+export { Price } from "./ui/price";
+export { SectionHeading } from "./ui/section-heading";
 
-// Phase 2 — Cards
+// Interactive menu components are exported from the same feature entrypoint.
 export { ProductCard } from "./cards/product-card";
 export { SignatureCard } from "./cards/signature-card";
 export { PairingCard } from "./cards/pairing-card";

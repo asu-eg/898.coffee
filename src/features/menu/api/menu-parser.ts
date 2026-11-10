@@ -1,7 +1,5 @@
-import { BADGE_RANK } from "../config";
 import type {
   AddOn,
-  BadgeKind,
   Category,
   Menu,
   Pairing,
@@ -19,7 +17,7 @@ import type {
   RawPriceOption,
   RawPricing,
   RawProduct,
-} from "../types/menu-response";
+} from "./menu-definition";
 
 class AddOnParser {
   static parse(id: string, raw: RawAddOn): AddOn {
@@ -66,8 +64,8 @@ class ProductParser {
       name: raw.name,
       description: raw.description,
       image: raw.image,
-      availability: raw.availability as Product["availability"],
-      badge: raw.badge as BadgeKind | null,
+      availability: raw.availability,
+      badge: raw.badge,
       pricing: PricingParser.parse(raw.pricing),
       addOns: resolveAddOns(raw.addOns),
       baristaWay: resolveAddOns(raw.baristaWay),
@@ -88,20 +86,12 @@ class ProductParser {
 }
 
 class CategoryParser {
-  static sort(products: Product[]): Product[] {
-    return products.slice().sort((a, b) => {
-      const rank = (badge: BadgeKind | null) =>
-        badge !== null ? (BADGE_RANK[badge] ?? 2) : 2;
-      return rank(a.badge) - rank(b.badge);
-    });
-  }
-
   static parse(raw: RawCategory, addOnMap: Record<string, AddOn>): Category {
     return {
       id: raw.id,
       name: raw.name,
-      products: CategoryParser.sort(
-        raw.products.map((p) => ProductParser.parse(p, addOnMap))
+      products: raw.products.map((product) =>
+        ProductParser.parse(product, addOnMap)
       ),
     };
   }

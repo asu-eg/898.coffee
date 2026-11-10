@@ -1,16 +1,14 @@
-export interface RawName {
-  en: string;
-  ar: string;
-}
+import type { Localized } from "@/shared/i18n";
+import type { Availability, BadgeKind } from "../types/menu-models";
 
 export interface RawAddOn {
-  name: RawName;
+  name: Localized<string>;
   price: number;
 }
 
 export interface RawPriceOption {
   id: string;
-  name: RawName | null;
+  name: Localized<string> | null;
   price: number;
   discount: number;
   final: number;
@@ -23,11 +21,11 @@ export interface RawPricing {
 
 export interface RawProduct {
   id: string;
-  name: RawName;
-  description: RawName;
+  name: Localized<string>;
+  description: Localized<string>;
   image: string | null;
-  availability: string;
-  badge: string | null;
+  availability: Availability;
+  badge: BadgeKind | null;
   addOns: string[];
   baristaWay: string[] | null;
   oftenOrderedWith: string[];
@@ -36,7 +34,7 @@ export interface RawProduct {
 
 export interface RawCategory {
   id: string;
-  name: RawName;
+  name: Localized<string>;
   products: RawProduct[];
 }
 
@@ -50,12 +48,10 @@ export interface RawMenuResponse {
   ok: true;
   updatedAt: string;
   currency: string;
-  badges: string[];
+  badges: BadgeKind[];
   addOns: Record<string, RawAddOn>;
   categories: RawCategory[];
   signatures: string[];
   pairings: RawPairing[];
   popup: { enabled: boolean; image: string | null; delaySeconds: number };
 }
-
-export type MenuError = "server" | "timeout" | "network" | "unknown";

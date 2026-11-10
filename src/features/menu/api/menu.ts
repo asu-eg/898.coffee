@@ -1,6 +1,9 @@
 import { ApiError, getJson } from "@/shared/api";
-import { MENU_ENDPOINT } from "../config";
-import type { RawMenuResponse, MenuError } from "../types/menu-response";
+import { type RawMenuResponse } from "./menu-definition";
+
+const MENU_ENDPOINT = "/menu";
+
+export type MenuError = "server" | "timeout" | "network" | "unknown";
 
 export async function fetchMenu(): Promise<RawMenuResponse> {
   return getJson<RawMenuResponse>(MENU_ENDPOINT);

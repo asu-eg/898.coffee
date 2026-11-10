@@ -212,3 +212,7 @@
     outline: none;
   }
 }
+
+[data-vaul-drawer] {
+  transition-timing-function: var(--ease-sheet-enter) !important;
+}

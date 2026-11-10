@@ -66,7 +66,7 @@ export interface Popup {
 export interface Menu {
   updatedAt: string;
   currency: string;
-  badges: string[];
+  badges: BadgeKind[];
   categories: Category[];
   signatures: Product[];
   pairings: Pairing[];

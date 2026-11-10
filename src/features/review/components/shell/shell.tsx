@@ -20,7 +20,7 @@ const styles = {
   handleContainer:
     "relative z-0 flex h-10 w-full shrink-0 items-center justify-center",
   handlePill:
-    "cursor-grab touch-none rounded-full !bg-charcoal/60 [&_[data-vaul-handle-hitarea]]:!h-50 [&_[data-vaul-handle-hitarea]]:!w-999 hover:!bg-charcoal/70 active:cursor-grabbing active:!bg-charcoal/80",
+    "cursor-grab touch-none rounded-full !bg-charcoal/60 [&_[data-vaul-handle-hitarea]]:!h-20 [&_[data-vaul-handle-hitarea]]:!w-999 hover:!bg-charcoal/70 active:cursor-grabbing active:!bg-charcoal/80",
   body: "flex-1 overflow-y-auto px-6",
   header: "mb-5",
   title: "text-title font-bold text-charcoal",

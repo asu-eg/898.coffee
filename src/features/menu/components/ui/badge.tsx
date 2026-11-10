@@ -1,9 +1,9 @@
 import { Icon } from "@/shared/icons";
 
-type BadgeVariant = "new" | "top" | "out_of_stock";
+type BadgeKind = "new" | "top" | "out_of_stock";
 
 interface BadgeProps {
-  kind: BadgeVariant;
+  kind: BadgeKind;
   label: string;
   compact?: boolean;
   className?: string;
@@ -16,42 +16,48 @@ const styles = {
   star: "size-3",
 } as const;
 
-const variantStyles: Record<
-  BadgeVariant,
-  { badge: string; paddingDefault: string; paddingCompact: string }
+const variants: Record<
+  BadgeKind,
+  { surface: string; regularPadding: string; compactPadding: string }
 > = {
   new: {
-    badge: "bg-brand text-white ring-white/30",
-    paddingDefault: "px-3",
-    paddingCompact: "px-2",
+    surface: "bg-brand text-white ring-white/30",
+    regularPadding: "px-3",
+    compactPadding: "px-2",
   },
   top: {
-    badge: "bg-sand text-charcoal ring-white/30",
-    paddingDefault: "ps-2 pe-3",
-    paddingCompact: "ps-1 pe-2",
+    surface: "bg-sand text-charcoal ring-white/30",
+    regularPadding: "ps-2 pe-3",
+    compactPadding: "ps-1 pe-2",
   },
   out_of_stock: {
-    badge: "bg-cream text-navy ring-navy/30",
-    paddingDefault: "px-3",
-    paddingCompact: "px-2",
+    surface: "bg-cream text-navy ring-navy/30",
+    regularPadding: "px-3",
+    compactPadding: "px-2",
   },
 } as const;
 
-export function Badge({ kind, label, compact = false, className }: BadgeProps) {
-  const { badge, paddingDefault, paddingCompact } = variantStyles[kind];
-  const padding = compact ? paddingCompact : paddingDefault;
-  const height = compact ? styles.compact : styles.regular;
-  const hasStar = kind === "top";
+export function Badge({
+  kind,
+  label,
+  compact = false,
+  className,
+}: BadgeProps) {
+  const variant = variants[kind];
 
   return (
     <span
-      className={[styles.base, height, padding, badge, className]
+      className={[
+        styles.base,
+        compact ? styles.compact : styles.regular,
+        compact ? variant.compactPadding : variant.regularPadding,
+        variant.surface,
+        className,
+      ]
         .filter(Boolean)
         .join(" ")}
     >
-      {hasStar && (
-        <Icon name="star" className={styles.star} />
-      )}
+      {kind === "top" && <Icon name="star" className={styles.star} />}
       {label}
     </span>
   );
