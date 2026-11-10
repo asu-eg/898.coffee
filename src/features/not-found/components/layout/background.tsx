@@ -47,7 +47,7 @@ const styles = {
     band: "absolute inset-x-0 top-0",
     layer: "absolute inset-0 size-full",
   },
-};
+} as const;
 
 const { colors: c, opacity: o, pattern: p, veil: v } = styles;
 
@@ -135,7 +135,7 @@ const CELLS = [
     fill={c.sand}
     fillOpacity={o.pill}
   />,
-];
+] as const;
 
 const ROWS = Math.ceil(CELLS.length / p.columns);
 
@@ -144,13 +144,17 @@ const VEIL = [
   `linear-gradient(to bottom, transparent ${v.fadeStart}, ${c.base} 100%)`,
 ].join(", ");
 
-export function Background() {
+interface BackgroundProps {
+  className?: string;
+}
+
+export function Background({ className }: BackgroundProps) {
   const patternId = useId();
 
   return (
     <div
       aria-hidden="true"
-      className={styles.classes.root}
+      className={`${styles.classes.root} ${className ?? ""}`}
       style={{ backgroundColor: c.base }}
     >
       <div

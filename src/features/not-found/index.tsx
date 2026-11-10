@@ -12,7 +12,7 @@ const styles = {
   title: "mt-5 text-title font-bold text-charcoal text-balance",
   message: "mt-3 max-w-xs text-body text-taupe text-balance",
   link: "mt-8 inline-flex min-h-12 items-center justify-center rounded-full bg-brand px-6 text-small font-bold text-white transition-colors duration-interactive ease-smooth hover:bg-navy focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand motion-reduce:transition-none",
-};
+} as const;
 
 export function NotFoundPage() {
   const s = useStrings(strings);

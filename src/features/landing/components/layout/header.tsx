@@ -3,6 +3,7 @@ interface HeaderProps {
   logoSrc: string;
   taglineLead: string;
   taglineEmphasis: string;
+  className?: string;
 }
 
 const styles = {
@@ -10,16 +11,17 @@ const styles = {
   logo: "w-[clamp(10.5rem,50vw,13rem)]",
   tagline: "mt-5 max-w-72 text-body text-navy",
   emphasis: "font-bold text-brand",
-};
+} as const;
 
 export function Header({
   brandName,
   logoSrc,
   taglineLead,
   taglineEmphasis,
+  className,
 }: HeaderProps) {
   return (
-    <header className={styles.header}>
+    <header className={`${styles.header} ${className ?? ""}`}>
       <h1>
         <img
           src={logoSrc}

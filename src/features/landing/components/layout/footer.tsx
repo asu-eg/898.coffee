@@ -2,6 +2,7 @@ interface FooterProps {
   lead: string;
   emphasis: string;
   brandName: string;
+  className?: string;
 }
 
 const currentYear = new Date().getFullYear();
@@ -11,11 +12,11 @@ const styles = {
   lead: "text-small text-navy",
   emphasis: "font-bold text-brand",
   copyright: "text-caption whitespace-nowrap text-navy/80",
-};
+} as const;
 
-export function Footer({ lead, emphasis, brandName }: FooterProps) {
+export function Footer({ lead, emphasis, brandName, className }: FooterProps) {
   return (
-    <footer className={styles.footer}>
+    <footer className={`${styles.footer} ${className ?? ""}`}>
       <p className={styles.lead}>
         {lead} <span className={styles.emphasis}>{emphasis}</span>
       </p>

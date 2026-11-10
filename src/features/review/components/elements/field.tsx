@@ -17,6 +17,7 @@ interface FieldProps {
   autoComplete?: string;
   rows?: number;
   hint?: string;
+  className?: string;
 }
 
 const styles = {
@@ -39,13 +40,14 @@ export function Field({
   autoComplete,
   rows = 5,
   hint,
+  className,
 }: FieldProps) {
   return (
     <TextField
       value={value}
       onChange={onChange}
       isRequired={required}
-      className={styles.wrapper}
+      className={`${styles.wrapper} ${className ?? ""}`}
     >
       <Label className={styles.label}>{label}</Label>
 

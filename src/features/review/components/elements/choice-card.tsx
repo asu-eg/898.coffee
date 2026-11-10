@@ -6,6 +6,7 @@ interface ChoiceCardProps {
   title: string;
   hint: string;
   onPress: () => void;
+  className?: string;
 }
 
 const styles = {
@@ -18,11 +19,20 @@ const styles = {
   hint: "text-small mt-0.5 block text-balance text-navy/65",
   arrow:
     "size-5 shrink-0 text-navy/40 transition duration-interactive ease-smooth group-data-hovered:translate-x-1 group-data-hovered:text-brand rtl:group-data-hovered:-translate-x-1 motion-reduce:transition-none",
-};
+} as const;
 
-export function ChoiceCard({ icon, title, hint, onPress }: ChoiceCardProps) {
+export function ChoiceCard({
+  icon,
+  title,
+  hint,
+  onPress,
+  className,
+}: ChoiceCardProps) {
   return (
-    <Button onPress={onPress} className={styles.card}>
+    <Button
+      onPress={onPress}
+      className={`${styles.card} ${className ?? ""}`}
+    >
       <span className={styles.bubble}>
         <Icon name={icon} className={styles.icon} />
       </span>

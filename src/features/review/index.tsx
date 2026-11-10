@@ -35,7 +35,7 @@ export function ReviewPage() {
             hint={s.choices.google.hint}
             onPress={review.openGoogleReview}
           />
-
+          
           <C.ChoiceCard
             icon="chat"
             title={s.choices.note.title}

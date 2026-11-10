@@ -10,7 +10,8 @@ interface DrawerProps {
   description: string;
   closeLabel: string;
   children: ReactNode;
-}
+  className?: string;
+} 
 
 const styles = {
   overlay:
@@ -28,7 +29,7 @@ const styles = {
     "group absolute end-4 top-1 z-10 inline-flex h-10 w-10 items-center justify-center rounded-full outline-none transition-transform duration-interactive ease-smooth active:scale-95 motion-reduce:transition-none",
   closeVisual:
     "flex size-8 items-center justify-center rounded-full bg-white text-brand ring-1 ring-black/5 transition-colors duration-interactive ease-smooth group-hover:bg-arctic motion-reduce:transition-none",
-};
+} as const;
 
 export function Drawer({
   isOpen,
@@ -37,6 +38,7 @@ export function Drawer({
   description,
   closeLabel,
   children,
+  className,
 }: DrawerProps) {
   return (
     <VaulDrawer.Root
@@ -49,7 +51,9 @@ export function Drawer({
       <VaulDrawer.Portal>
         <VaulDrawer.Overlay className={styles.overlay} />
 
-        <VaulDrawer.Content className={styles.content}>
+        <VaulDrawer.Content
+          className={`${styles.content} ${className ?? ""}`}
+        >
           <Button
             aria-label={closeLabel}
             onPress={onClose}

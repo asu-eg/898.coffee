@@ -14,7 +14,7 @@ const styles = {
   navSlot: "flex flex-1 flex-col gap-6",
   group: "flex flex-col gap-3",
   cards: "flex flex-col gap-3",
-};
+} as const;
 
 export function LandingPage() {
   const s = useStrings(strings);
@@ -25,23 +25,21 @@ export function LandingPage() {
       <C.Background />
 
       <div className={styles.container}>
-        <div className={styles.toggleSlot}>
-          <C.LanguageToggle
-            label={s.language.name}
-            ariaLabel={s.language.switchTo}
-            lang={otherLocale}
-            onPress={() => setLocale(otherLocale)}
-          />
-        </div>
+        <C.LanguageToggle
+          label={s.language.name}
+          ariaLabel={s.language.switchTo}
+          lang={otherLocale}
+          onPress={() => setLocale(otherLocale)}
+          className={styles.toggleSlot}
+        />
 
-        <div className={styles.headerSlot}>
-          <C.Header
-            brandName={site.brandName}
-            logoSrc={logo}
-            taglineLead={s.header.taglineLead}
-            taglineEmphasis={s.header.taglineEmphasis}
-          />
-        </div>
+        <C.Header
+          brandName={site.brandName}
+          logoSrc={logo}
+          taglineLead={s.header.taglineLead}
+          taglineEmphasis={s.header.taglineEmphasis}
+          className={styles.headerSlot}
+        />
 
         <nav aria-label={s.nav.mainNav} className={styles.navSlot}>
           <div className={styles.group}>
